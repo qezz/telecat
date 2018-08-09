@@ -1,0 +1,13 @@
+[package]
+name = "telecat"
+version = "0.1.0"
+authors = ["Sergey Mishin <sergei.a.mishin@gmail.com>"]
+
+[dependencies]
+# failure = "0.1.2"
+
+futures = "0.1.23"
+tokio = "0.1.7"
+futures-retry = "0.2.1"
+
+teleborg = "0.1.32"
