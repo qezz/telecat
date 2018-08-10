@@ -24,7 +24,10 @@ fn main() {
         .retry(|_| RetryPolicy::Repeat)
         .flat_iter()
         .for_each(move |upd| {
-            tokio::spawn(process(&*bot, upd));
+            tokio::spawn(handle1(&*bot, &upd));
+            tokio::spawn(handle2(&*bot, &upd));
+
+            seq_handle(&*bot, &upd);
 
             Ok(())
         });
@@ -32,10 +35,20 @@ fn main() {
     tokio::run(running);
 }
 
-fn process(bot: &telecat::Bot, upd: telecat::types::Update) -> impl Future<Item=(), Error=()> {
-    println!("hello world, {:?}", upd);
-    match bot.reply_to_message(&upd, "slap") {
+fn handle1(bot: &telecat::Bot, upd: &telecat::types::Update) -> impl Future<Item=(), Error=()> {
+    match bot.reply_to_message(upd, "async handle1") {
         Ok(_) => future::ok(()),
         Err(_) => future::err(()),
     }
+}
+
+fn handle2(bot: &telecat::Bot, upd: &telecat::types::Update) -> impl Future<Item=(), Error=()> {
+    match bot.reply_to_message(upd, "async handle2") {
+        Ok(_) => future::ok(()),
+        Err(_) => future::err(()),
+    }
+}
+
+fn seq_handle(bot: &telecat::Bot, upd: &telecat::types::Update) -> Result<telecat::types::Message, telecat::error::Error> {
+    bot.reply_to_message(upd, "sequential handler")
 }

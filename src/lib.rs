@@ -9,6 +9,7 @@ extern crate teleborg;
 pub mod flatstream;
 pub mod rawstream;
 pub mod types;
+pub mod error;
 
 pub use teleborg::Bot;
 
