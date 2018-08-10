@@ -39,20 +39,24 @@ fn main() {
         .retry(|_| RetryPolicy::Repeat)
         .flat_iter()
         .for_each(move |upd| {
-            tokio::spawn(process(&*bot, upd));
-
+            tokio::spawn(process(&*bot, &upd));
+            sequential(&*bot, &upd);
             Ok(())
         });
 
     tokio::run(running);
 }
 
-fn process(bot: &telecat::Bot, upd: telecat::types::Update) -> impl Future<Item=(), Error=()> {
+fn process(bot: &telecat::Bot, upd: &telecat::types::Update) -> impl Future<Item=(), Error=()> {
     println!("hello world, {:?}", upd);
     match bot.reply_to_message(&upd, "slap") {
         Ok(_) => future::ok(()),
         Err(_) => future::err(()),
     }
+}
+
+fn sequential(bot: &telecat::Bot, upd: &telecat::types::Update) -> Result<telecat::types::Message, telecat::error::Error> {
+    bot.reply_to_message(upd, "sequential handler")
 }
 ```
 
