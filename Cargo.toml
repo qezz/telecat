@@ -10,4 +10,4 @@ futures = "0.1.23"
 tokio = "0.1.7"
 futures-retry = "0.2.1"
 
-teleborg = "0.1.32"
+teleborg = { git = "https://github.com/qezz/teleborg" }
