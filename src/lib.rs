@@ -1,5 +1,3 @@
-#![feature(crate_in_paths)]
-
 #[macro_use]
 extern crate futures;
 extern crate tokio;
