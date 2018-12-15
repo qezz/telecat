@@ -55,6 +55,9 @@ impl Stream for RawStream {
                             return Ok(Async::Ready(Some(vec![])))
                         },
                         _ => {
+                            if let Some(ref mut x) = self.last_update_id {
+                                *x += 1;
+                            }
                             return Ok(Async::Ready(Some(vec![])))
                         }
                     }
