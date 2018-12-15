@@ -35,6 +35,8 @@ impl Stream for RawStream {
                 network_delay
             );
 
+            debug!("pending_updates: {:?}", pending_updates);
+
             match pending_updates {
                 Ok(Some(v)) => {
                     self.last_update_id = v.iter().map(|upd| upd.update_id as i32 + 1).max();
