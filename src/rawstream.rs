@@ -45,9 +45,19 @@ impl Stream for RawStream {
                 Ok(None) => {
                     return Ok(Async::Ready(Some(vec![])))
                 }
-                Err(_e) => {
-                    // FIXME: Introduce good error types
-                    return Err(());
+                Err(e) => {
+                    // DIRTY HACK
+                    match e {
+                        JsonError => {
+                            if let Some(ref mut x) = self.last_update_id {
+                                *x += 1;
+                            }
+                            return Ok(Async::Ready(Some(vec![])))
+                        },
+                        _ => {
+                            return Ok(Async::Ready(Some(vec![])))
+                        }
+                    }
                 }
             }
         }
