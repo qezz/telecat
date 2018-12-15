@@ -35,7 +35,7 @@ impl Stream for RawStream {
                 network_delay
             );
 
-            debug!("pending_updates: {:?}", pending_updates);
+            println!("pending_updates: {:?}", pending_updates);
 
             match pending_updates {
                 Ok(Some(v)) => {
