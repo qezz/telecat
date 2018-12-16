@@ -2,6 +2,8 @@ use futures::{Async, Stream};
 use teleborg as tg;
 use std::sync::Arc;
 
+use teleborg::error::Error::JsonError;
+
 // RawStreamer is streaming updates from telegram api as is
 pub struct RawStream {
     bot: Arc<tg::Bot>,
@@ -48,7 +50,7 @@ impl Stream for RawStream {
                 Err(e) => {
                     // DIRTY HACK
                     match e {
-                        JsonError => {
+                        JsonError(_ee) => {
                             if let Some(ref mut x) = self.last_update_id {
                                 *x += 1;
                             }
