@@ -50,15 +50,9 @@ impl Stream for RawStream {
                 Err(e) => {
                     // DIRTY HACK
                     match e {
-                        JsonError(_ee) => {
-                            if let Some(ref mut x) = self.last_update_id {
-                                *x += 1;
-                            }
-                            return Ok(Async::Ready(Some(vec![])))
-                        },
                         _ => {
                             if let Some(ref mut x) = self.last_update_id {
-                                *x += 1;
+                                *x = -1;
                             }
                             return Ok(Async::Ready(Some(vec![])))
                         }
