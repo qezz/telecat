@@ -1,4 +1,10 @@
-# Telecat 
+# ⚠️ DEPRECATION NOTICE
+
+This crate is deprecated. Use awesome
+[carapax](https://github.com/tg-rs/carapax) for a modern take on
+Telegram Bots and Rust futures.
+
+# Telecat
 
 Telecat is a simple library for making Telegram bots
 
